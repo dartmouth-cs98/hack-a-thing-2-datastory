@@ -1,0 +1,116 @@
+<!-- using https://github.com/russellgoldenberg/scrollama docs and examples -->
+<!-- also using this tutorial for no svg charts wow https://pudding.cool/process/flexbox-layout/ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Data Story</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='main.css'>
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    </head>
+
+    <body>
+        <main>
+            <section id='heading'>
+                <h1>What would a representative senate look like?</h1>
+                <p> text here about congress and representation and stuff</p>
+            </section>
+                
+            <section id='scrolly'>
+                
+                <article>
+                    <div class='step' data-step='1'>
+                        <p>What does the senate look like now?</p>
+                    </div>
+                    <div class='step' data-step='2'>
+                        <p>What's the US's gender breakdown?</p>
+                    </div>
+                    <div class='step' data-step='3'>
+                        <p>What's the US's racial breakdown?</p>
+                    </div>
+                    <div class='step' data-step='4'>
+                        <p>So what would a senate representaive of the United States look like?</p>
+                    </div>
+                </article>
+
+                <figure class="scrollfigure">
+                    <figure class="waffle">
+                    </figure>
+                </figure>
+            </section>
+
+            <section id='outro'>
+                 <p>ending text here</p>
+            </section>
+        </main>
+        
+        <script src='https://unpkg.com/d3@5.9.1/dist/d3.min.js'></script>
+        <script src='https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js'></script>
+        <script src='./stickyfill.min.js'></script>
+        <script src="https://unpkg.com/scrollama"></script>
+        <script>
+            var main = d3.select('main')
+            var scrolly = main.select('#scrolly');
+            var figure = scrolly.select('figure');
+            var article = scrolly.select('article');
+            var step = article.selectAll('.step');
+            var scroller = scrollama();
+
+            // data for chart
+            var step1 = [25, 2];
+
+            // for waffle chart
+            const waffle = d3.select('.waffle');
+            const numbers = d3.range(100);
+
+            waffle.selectAll('.block')
+                .data(numbers)
+                .enter()
+                .append('div')
+                .attr('class', 'block')
+                .style('border-color', d => (d < 25 ? '#ed91b7' : '#91cbed'))
+                .style('background-color', d => (d < 2 ? '#eee' : '#fff'));
+
+            function handleResize() {
+                var stepH = Math.floor(window.innerHeight * 0.75);
+                step.style('height', stepH + 'px');
+                var figureHeight = window.innerHeight / 2
+                var figureMarginTop = (window.innerHeight - figureHeight) / 2  
+                figure
+                    .style('height', figureHeight + 'px')
+                    .style('top', figureMarginTop + 'px');
+                waffle.style('width', figureHeight + 'px');
+                scroller.resize();
+            }
+
+            function handleStepEnter(response) {
+                console.log(response)
+                // response = { element, direction, index }
+                // add color to current step only
+                step.classed('is-active', function (d, i) {
+                    return i === response.index;
+                })
+                //figure.select('p').text(response.index + 1);
+            }
+
+            function setupStickyfill() {
+                d3.selectAll('.sticky').each(function () {
+                    Stickyfill.add(this);
+                });
+            }
+
+            function init() {
+                setupStickyfill();
+                handleResize();
+                scroller.setup({
+                    step: '#scrolly article .step',
+                    offset: 0.33,
+                })
+                    .onStepEnter(handleStepEnter)
+                window.addEventListener('resize', handleResize);
+            }
+
+            init();
+        </script>
+    </body>
+</html>
