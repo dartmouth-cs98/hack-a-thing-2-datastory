@@ -1,5 +1,6 @@
 <!-- using https://github.com/russellgoldenberg/scrollama docs and examples -->
 <!-- also using this tutorial for no svg charts wow https://pudding.cool/process/flexbox-layout/ -->
+<!-- also used this tutorial for patterns with css https://css-tricks.com/stripes-css/ -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -57,7 +58,10 @@
             var scroller = scrollama();
 
             // data for chart
-            var step1 = [25, 2];
+            const womenInCongress = 25;
+            const nonWhiteInCongress = 9;
+            const womenInUSA = 51; 
+            const nonWhiteInUSA = 40;
 
             // for waffle chart
             const waffle = d3.select('.waffle');
@@ -69,7 +73,7 @@
                 .append('div')
                 .attr('class', 'block')
                 .style('border-color', d => (d < 25 ? '#ed91b7' : '#91cbed'))
-                .style('background-color', d => (d < 2 ? '#eee' : '#fff'));
+                .style('background', d => (d < 10 ? 'repeating-linear-gradient(45deg,#888,#888 5px,#fff 5px,#fff 10px)' : '#fff'));
 
             function handleResize() {
                 var stepH = Math.floor(window.innerHeight * 0.75);
@@ -90,6 +94,27 @@
                 step.classed('is-active', function (d, i) {
                     return i === response.index;
                 })
+                if(response.index == 0) {
+                    waffle.selectAll('.block')
+                        .data(numbers)
+                        .style('border-color', d => (d < womenInCongress ? '#ed91b7' : '#91cbed'))
+                        .style('background', d => (d < nonWhiteInCongress-5 || (d >= womenInCongress && d < womenInCongress+nonWhiteInCongress-4) ? 'repeating-linear-gradient(45deg,#888,#888 5px,#fff 5px,#fff 10px)' : '#fff'));
+                } else if(response.index == 1) {
+                    waffle.selectAll('.block')
+                        .data(numbers)
+                        .style('border-color', d => (d < womenInUSA ? '#ed91b7' : '#91cbed'))
+                        .style('background', '#fff');
+                } else if (response.index == 2) {
+                    waffle.selectAll('.block')
+                        .data(numbers)
+                        .style('border-color', '#BC99DA')
+                        .style('background', d => (d < nonWhiteInUSA ? 'repeating-linear-gradient(45deg,#888,#888 5px,#fff 5px,#fff 10px)' : '#fff'));
+                } else {
+                    waffle.selectAll('.block')
+                        .data(numbers)
+                        .style('border-color', d => (d < womenInUSA ? '#ed91b7' : '#91cbed'))
+                        .style('background', d => (d < nonWhiteInUSA/2 || (d >= womenInUSA && d < womenInUSA+nonWhiteInUSA/2) ? 'repeating-linear-gradient(45deg,#888,#888 5px,#fff 5px,#fff 10px)' : '#fff'));
+                }
                 //figure.select('p').text(response.index + 1);
             }
 
