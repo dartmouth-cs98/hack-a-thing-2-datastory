@@ -52,10 +52,17 @@ article {
     color: #3b3b3b;
 }
 
-.step p {
+.step h1 {
     text-align: center;
     padding: 1rem;
     font-size: 1.5rem;
+}
+
+.step p {
+    text-align: left;
+    font-size: 1.2rem;
+    margin-right: 5%; 
+    margin-left:5%;
 }
 
 #heading {
@@ -75,6 +82,12 @@ article {
     flex-wrap: wrap;
     height: 100%;
     margin-left: 15%;
+    margin-right: 35%;
+}
+
+.headtext {                             
+    font-size: 1.5rem;
+    margin-left: 30%;
     margin-right: 35%;
 }
   

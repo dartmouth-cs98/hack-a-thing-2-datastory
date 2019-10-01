@@ -14,34 +14,66 @@
         <main>
             <section id='heading'>
                 <h1>What would a representative senate look like?</h1>
-                <p> text here about congress and representation and stuff</p>
+                <p style="margin-left: 15%; margin-right: 15%; text-align:center;">The United States is currently on its 116th iteration of Congress, comprised of the House of Representatives and the Senate. In November of 2018, the Democratic Party won a majority in the House while the Republican Party increased its majority in the Senate making this the first split of this kind in 20 years. Many have called this Congress the most diverse ever elected, with the youngest incoming class in three cycles. Let's see if that's really the case - starting with our Senate. </p>
             </section>
                 
             <section id='scrolly'>
                 
                 <article>
                     <div class='step' data-step='1'>
-                        <p>What does the senate look like now?</p>
+                        <h1>How is our current Senate split?</h1>
+                        <p>The US Senate is made up of two Senators from each of the 50 states giving it a grand total of <b>100</b> members.</p>
+                        <p>The Senate is often looked at through a lens of political party giving us the false sense that it is representative of the changing United States.</p>
+                        <p>In 2018, the Senate gained two Republican seats, giving it a 3 seat majority.</p>
+                        <p>Though we often see these legislative bodies as representative of the country's political climate, we are still left with the question of whether they appropriately represent the demographics of the country.</p>
+                        <p>That's the question we aim to explore.</p>
                     </div>
                     <div class='step' data-step='2'>
-                        <p>What's the US's gender breakdown?</p>
+                        <h1>What does the Senate look like now?</h1>
+                        <p>Of the 100 total members, we have:</p>
+                        <p>     <b>25</b> women and <b>75</b> men.</p>
+                        <p>     <b>9</b> Senators of color and <b>91</b> white Senators.</p>
+
+                        <p>This gives us a total of <b>4</b> female and <b>5</b> male Senators of color.</p>
+                        <p>Since this is often regarded as the most diverse legislature in history, these numbers mark a move away from the traditional white, male legislature.</p>
+                        <p>How does this improvement move Senate towards accurately representing the United States of 2019?</p>
                     </div>
                     <div class='step' data-step='3'>
-                        <p>What's the US's racial breakdown?</p>
+                        <h1>What's the US's gender breakdown?</h1>
+                        <p>As the United States has expanded, our gender breakdown has not significantly shifted but has moved towards a slight female majority.</p>
+                        <p>The US is currently <b>51%</b> female.</p>
+                        <p>However, more often policymakers across the country are male.</p>
+                        <p>These policymakers are the ones making decisions on issues affecting women.</p>
+                        <p>Female policymakers are often silenced as a minority on these decisions - making up only <b>25%</b> of the Senate.</p>
                     </div>
                     <div class='step' data-step='4'>
-                        <p>So what would a senate representaive of the United States look like?</p>
+                        <h1>What's the US's racial breakdown?</h1>
+                        <p>On a similar but much more significant shift, the racial background of the US is not nearly as homogenous of that which was governed by its very first Congress.</p>
+                        <p>In 2019, we have seen a massive growth in racially diverse Americans.</p>
+                        <p>The US is currently <b>40%</b> non-white.</p>
+                        <p>Policymakers in the country are overwhelming white compared to the country they govern.</p>
+                        <p>As policy continues to affect people of color, in direct ways such as immigration and indirect ways such as climate change, these voices are often left out of the policymaking process with only <b>9%</b>representation in the Senate.</p>
+                    </div>
+                    <div class='step' data-step='5'>
+                        <h1>So what would a Senate representative of the United States look like?</h1>
+                        <p>In a nutshell, it is clear that our current Senate, though it has improved, is not nearly as representative of the American public as it should be.</p>
+                        <p>We should be seeing more Senators of color and female Senators proportional to the country which it governs. </p>
+                        <p>This means we should have:</p>
+                        <p><b>51</b> female Senators and <b>49</b> male Senators</p>
+                        <p><b>40</b> Senators of color and <b>60</b> white Senators</p>
+                        <p>in order to accurately represent the United States in 2019.</p>
                     </div>
                 </article>
 
                 <figure class="scrollfigure">
+                    
                     <figure class="waffle">
                     </figure>
                 </figure>
             </section>
 
             <section id='outro'>
-                 <p>ending text here</p>
+                 <p>Click <a href="https://www.democrats.senate.gov/about-senate-dems/diversity-initiative">here</a> to learn how to get involved and perhaps elect a more representative and diverse senate.</p>
             </section>
         </main>
         
@@ -58,6 +90,7 @@
             var scroller = scrollama();
 
             // data for chart
+            const repsInCongress = 53;
             const womenInCongress = 25;
             const nonWhiteInCongress = 9;
             const womenInUSA = 51; 
@@ -66,6 +99,7 @@
             // for waffle chart
             const waffle = d3.select('.waffle');
             const numbers = d3.range(100);
+            const title = d3.select('.headtext');
 
             waffle.selectAll('.block')
                 .data(numbers)
@@ -74,7 +108,7 @@
                 .attr('class', 'block')
                 .style('border-color', d => (d < 25 ? '#ed91b7' : '#91cbed'))
                 .style('background', d => (d < 10 ? 'repeating-linear-gradient(45deg,#888,#888 5px,#fff 5px,#fff 10px)' : '#fff'));
-
+            
             function handleResize() {
                 var stepH = Math.floor(window.innerHeight * 0.75);
                 step.style('height', stepH + 'px');
@@ -97,14 +131,22 @@
                 if(response.index == 0) {
                     waffle.selectAll('.block')
                         .data(numbers)
+                        .style('border-color', d => (d < repsInCongress ? '#FF0000' : '#0000FF'))
+                        .style('background', d => (d < repsInCongress ? '#FF0000' : '#0000FF'))
+                        title.textContext = "Republicans vs Democrats";
+                } else if(response.index == 1) {
+                    waffle.selectAll('.block')
+                        .data(numbers)
                         .style('border-color', d => (d < womenInCongress ? '#ed91b7' : '#91cbed'))
                         .style('background', d => (d < nonWhiteInCongress-5 || (d >= womenInCongress && d < womenInCongress+nonWhiteInCongress-4) ? 'repeating-linear-gradient(45deg,#888,#888 5px,#fff 5px,#fff 10px)' : '#fff'));
-                } else if(response.index == 1) {
+                    title.textContext = "Current Senate Demographics"
+                } else if(response.index == 2) {
                     waffle.selectAll('.block')
                         .data(numbers)
                         .style('border-color', d => (d < womenInUSA ? '#ed91b7' : '#91cbed'))
                         .style('background', '#fff');
-                } else if (response.index == 2) {
+                        title.textContext = "Current Women vs Men";
+                } else if (response.index == 3) {
                     waffle.selectAll('.block')
                         .data(numbers)
                         .style('border-color', '#BC99DA')

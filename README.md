@@ -12,7 +12,7 @@ Since the data for the story is fairly simple, we used information from the [U.S
 
 ### Who did what (if you worked with someone else)
 
-Emma Langfitt and Himadri Narasimhamurthy worked together to create this data visualization. Emma did the initial framework and connection to the libraries, and Himadri worked with the charts and content of the story.
+Emma Langfitt and Himadri Narasimhamurthy worked together to create this data visualization. Emma did the initial framework and connection to the libraries, and Himadri worked with the charts and content of the story - as well as learning some fundamentals of web development as she was a complete novice.
 
 ### What you learned
 
