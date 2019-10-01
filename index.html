@@ -131,8 +131,8 @@
                 if(response.index == 0) {
                     waffle.selectAll('.block')
                         .data(numbers)
-                        .style('border-color', d => (d < repsInCongress ? '#FF0000' : '#0000FF'))
-                        .style('background', d => (d < repsInCongress ? '#FF0000' : '#0000FF'))
+                        .style('border-color', d => (d < repsInCongress ? '#DC143C' : '#6495ED'))
+                        .style('background', d => (d < repsInCongress ? '#DC143C' : '#6495ED'))
                         title.textContext = "Republicans vs Democrats";
                 } else if(response.index == 1) {
                     waffle.selectAll('.block')
